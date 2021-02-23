@@ -6,9 +6,11 @@ from model import pred
 import numpy as np
 import os
 import cv2 as cv
+from flask_cors import CORS
 
 app = Flask(__name__)
-app.config["IMAGE_UPLOADS"] = "/root/upload_image/uploaded_ima"
+app.config["IMAGE_UPLOADS"] = "/backend/uploaded_ima"
+cors = CORS(app, resources={r"*": {"origins": "*"}})
 
 
 @app.route("/upload-image", methods=["GET", "POST"])
@@ -18,12 +20,12 @@ def upload_image():
             image = request.files["image"]
             image.save(os.path.join(app.config["IMAGE_UPLOADS"], "temp"))
             try:
-            	r = pred(cv.imread("uploaded_ima/temp"))
+                r = pred(cv.imread("uploaded_ima/temp"))
             except Exception as e:
                 print(e)
                 r = None
             print(type(r))
-            os.remove("/root/upload_image/uploaded_ima/temp")
+            os.remove("/backend/uploaded_ima/temp")
             print(image)
             if r:
             	return {"status": "Ok", "Number_predicted":(r.tolist())[0]}
@@ -37,4 +39,4 @@ def hello_hbnb():
 
 if __name__ == "__main__":
     """ Main Function """
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=5000)

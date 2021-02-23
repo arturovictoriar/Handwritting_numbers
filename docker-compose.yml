@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  d_back:
+    image: digi_back
+    build:
+      context: .
+      dockerfile: back.Dockerfile
+    ports:
+      - "5000:5000"
+  d_front:
+    image: digi_front
+    build:
+      context: .
+      dockerfile: front.Dockerfile
+    ports:
+      - "3000:3000"
