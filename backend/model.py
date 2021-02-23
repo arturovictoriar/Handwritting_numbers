@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 
+"""Predict a given image"""
+
+#import the libraries and modules
 import cv2 as cv
 import keras.models
 
 def pred(content_image):
-    # Import the model 
+    """ Procces and predict the number representation of a image"""
+    # Import the model trained
     model = keras.models.load_model('mymodel')
 
+    # Apply filters and resize the image to predict it
     image = content_image
     image = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
     image = cv.threshold(image, 130, 255, cv.THRESH_BINARY)[1]    
@@ -18,11 +23,9 @@ def pred(content_image):
     # Image to predict
     print(image.shape)
 
-    # Prediction a image with the model
+    # Predict a image means by the model
     prediction = model.predict_classes(image)
 
     # Plotting the image predicted
     print("\n\n\nThe number predicted was: ", prediction)
     return prediction
-
-#pred(content_image = imread("uploaded_ima/rsz_31.jpg").reshape(28,28,1))

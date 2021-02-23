@@ -1,3 +1,5 @@
+# Identify handwritten image using Tensoflow-Keras in CPU
+
 FROM ubuntu:20.04
 
 RUN apt update -y && apt upgrade -y && apt install -y gnupg2
